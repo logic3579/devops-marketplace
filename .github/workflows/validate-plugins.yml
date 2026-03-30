@@ -1,0 +1,217 @@
+name: Validate Plugins
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.claude-plugin/**'
+      - 'plugins/**'
+  pull_request:
+    branches: [main]
+    paths:
+      - '.claude-plugin/**'
+      - 'plugins/**'
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate-json:
+    name: Validate JSON Manifests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Validate marketplace.json
+        run: |
+          echo "::group::marketplace.json"
+          python3 -c "
+          import json, sys
+          with open('.claude-plugin/marketplace.json') as f:
+              data = json.load(f)
+          required = ['name', 'displayName', 'owner', 'metadata', 'plugins']
+          missing = [k for k in required if k not in data]
+          if missing:
+              print(f'::error::Missing required fields: {missing}')
+              sys.exit(1)
+          if not isinstance(data['plugins'], list) or len(data['plugins']) == 0:
+              print('::error::plugins array is empty')
+              sys.exit(1)
+          for p in data['plugins']:
+              for field in ['name', 'description', 'version', 'source']:
+                  if field not in p:
+                      print(f'::error::Plugin \"{p.get(\"name\", \"unknown\")}\" missing field: {field}')
+                      sys.exit(1)
+          print(f'Valid. {len(data[\"plugins\"])} plugin(s) registered.')
+          "
+          echo "::endgroup::"
+
+      - name: Validate plugin.json files
+        run: |
+          exit_code=0
+          for manifest in plugins/*/.claude-plugin/plugin.json; do
+            [ -f "$manifest" ] || continue
+            plugin_dir=$(dirname "$(dirname "$manifest")")
+            plugin_name=$(basename "$plugin_dir")
+            echo "::group::$plugin_name/plugin.json"
+
+            python3 -c "
+          import json, sys
+          with open('$manifest') as f:
+              data = json.load(f)
+          required = ['name', 'displayName', 'version', 'description']
+          missing = [k for k in required if k not in data]
+          if missing:
+              print(f'::error file=$manifest::Missing required fields: {missing}')
+              sys.exit(1)
+          print(f'Valid. skills={len(data.get(\"skills\",[]))} agents={len(data.get(\"agents\",[]))} hooks={len(data.get(\"hooks\",[]))}')
+            " || exit_code=1
+
+            echo "::endgroup::"
+          done
+          exit $exit_code
+
+  validate-entrypoints:
+    name: Validate Entrypoints
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Check all entrypoints exist
+        run: |
+          exit_code=0
+          for manifest in plugins/*/.claude-plugin/plugin.json; do
+            [ -f "$manifest" ] || continue
+            plugin_dir=$(dirname "$(dirname "$manifest")")
+            plugin_name=$(basename "$plugin_dir")
+
+            python3 -c "
+          import json, os, sys
+          plugin_dir = '$plugin_dir'
+          with open('$manifest') as f:
+              data = json.load(f)
+          errors = 0
+          for kind in ['skills', 'agents', 'hooks']:
+              for item in data.get(kind, []):
+                  ep = item.get('entrypoint', '')
+                  full_path = os.path.normpath(os.path.join(plugin_dir, ep))
+                  if os.path.exists(full_path):
+                      print(f'  OK  {kind}/{item[\"name\"]}: {full_path}')
+                  else:
+                      print(f'::error file={full_path}::MISSING entrypoint for {kind}/{item[\"name\"]}')
+                      errors += 1
+          if errors:
+              sys.exit(1)
+            " || exit_code=1
+          done
+          exit $exit_code
+
+      - name: Check marketplace plugin sources exist
+        run: |
+          python3 -c "
+          import json, os, sys
+          with open('.claude-plugin/marketplace.json') as f:
+              data = json.load(f)
+          errors = 0
+          for p in data['plugins']:
+              src = p['source']
+              manifest = os.path.join(src, '.claude-plugin', 'plugin.json')
+              if os.path.exists(manifest):
+                  print(f'  OK  {p[\"name\"]}: {manifest}')
+              else:
+                  print(f'::error::Plugin \"{p[\"name\"]}\" source not found: {manifest}')
+                  errors += 1
+          if errors:
+              sys.exit(1)
+          "
+
+  validate-scripts:
+    name: Validate Scripts
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Check scripts are executable
+        run: |
+          exit_code=0
+          while IFS= read -r script; do
+            if [ -x "$script" ]; then
+              echo "  OK  $script"
+            else
+              echo "::error file=$script::Script is not executable (missing chmod +x)"
+              exit_code=1
+            fi
+          done < <(find plugins -type f -name '*.sh')
+          exit $exit_code
+
+      - name: Shellcheck
+        run: |
+          exit_code=0
+          while IFS= read -r script; do
+            echo "::group::$script"
+            shellcheck -s bash -S warning "$script" || exit_code=1
+            echo "::endgroup::"
+          done < <(find plugins -type f -name '*.sh')
+          exit $exit_code
+
+  validate-consistency:
+    name: Validate Cross-Reference Consistency
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Check marketplace ↔ plugin version consistency
+        run: |
+          python3 -c "
+          import json, os, sys
+          with open('.claude-plugin/marketplace.json') as f:
+              marketplace = json.load(f)
+          errors = 0
+          for p in marketplace['plugins']:
+              manifest_path = os.path.join(p['source'], '.claude-plugin', 'plugin.json')
+              if not os.path.exists(manifest_path):
+                  continue  # caught by entrypoint check
+              with open(manifest_path) as f:
+                  plugin = json.load(f)
+              # Version match
+              if p['version'] != plugin['version']:
+                  print(f'::warning::Version mismatch for \"{p[\"name\"]}\": marketplace={p[\"version\"]} plugin={plugin[\"version\"]}')
+              # Name match
+              if p['name'] != plugin['name']:
+                  print(f'::error::Name mismatch: marketplace=\"{p[\"name\"]}\" plugin=\"{plugin[\"name\"]}\"')
+                  errors += 1
+              print(f'  OK  {p[\"name\"]} v{p[\"version\"]}')
+          if errors:
+              sys.exit(1)
+          "
+
+      - name: Check for orphaned plugins
+        run: |
+          python3 -c "
+          import json, os, sys
+          with open('.claude-plugin/marketplace.json') as f:
+              registered = {p['name'] for p in json.load(f)['plugins']}
+          on_disk = set()
+          for d in os.listdir('plugins'):
+              manifest = os.path.join('plugins', d, '.claude-plugin', 'plugin.json')
+              if os.path.isfile(manifest):
+                  on_disk.add(d)
+          orphaned = on_disk - registered
+          if orphaned:
+              for name in orphaned:
+                  print(f'::warning::Plugin \"{name}\" exists on disk but is not registered in marketplace.json')
+          unresolved = registered - on_disk
+          if unresolved:
+              for name in unresolved:
+                  print(f'::error::Plugin \"{name}\" registered in marketplace.json but not found on disk')
+              sys.exit(1)
+          print(f'  OK  {len(registered)} registered, {len(on_disk)} on disk, {len(orphaned)} orphaned')
+          "

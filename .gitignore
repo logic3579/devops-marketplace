@@ -1,0 +1,50 @@
+# === AI Coding Assistants ===
+
+# Claude Code
+.mcp.json
+.claude/settings.local.json
+.claude/memory/
+.claude/sessions/
+
+# Codex
+.codex/config.toml
+
+# Gemini CLI
+.gemini/settings.json
+
+# Cursor
+.cursorignore
+.cursorindexingignore
+
+# === OS ===
+.DS_Store
+Thumbs.db
+Desktop.ini
+._*
+
+# === Editors & IDEs ===
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# === Logs & Temp ===
+*.log
+tmp/
+.tmp/
+
+# === Testing artifacts ===
+coverage/
+.nyc_output/
+junit-*.xml
+
+# === Environment & Secrets ===
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json

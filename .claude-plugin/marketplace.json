@@ -1,0 +1,32 @@
+{
+  "name": "devops-marketplace",
+  "displayName": "Logic DevOps Marketplace",
+  "owner": {
+    "name": "Logic",
+    "email": "logic3@duck.com"
+  },
+  "metadata": {
+    "description": "A curated collection of DevOps-oriented Claude Code plugins for CI/CD automation, infrastructure management, and deployment workflows. Designed for personal and team use.",
+    "version": "1.0.0",
+    "license": "MIT",
+    "repository": "https://github.com/logic/devops-marketplace"
+  },
+  "plugins": [
+    {
+      "name": "cicd-automation",
+      "description": "Review and generate CI/CD pipelines (GitHub Actions, GitLab CI). Checks security, SHA pinning, supply chain, permissions, caching, and compliance. Use when editing .github/workflows/ or .gitlab-ci.yml.",
+      "version": "1.0.0",
+      "source": "./plugins/cicd-automation",
+      "category": "devops",
+      "tags": ["cicd", "github-actions", "gitlab", "security", "pipeline"]
+    },
+    {
+      "name": "marketplace-tools",
+      "description": "Official built-in tools for the marketplace itself. Scaffold new skills, plugins, and validate marketplace structure.",
+      "version": "1.0.0",
+      "source": "./plugins/marketplace-tools",
+      "category": "tooling",
+      "tags": ["marketplace", "scaffold", "skill", "plugin", "meta"]
+    }
+  ]
+}

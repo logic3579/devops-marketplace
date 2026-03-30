@@ -1,0 +1,38 @@
+{
+  "name": "cicd-automation",
+  "displayName": "CI/CD Automation",
+  "version": "1.0.0",
+  "description": "Review and generate CI/CD pipelines (GitHub Actions, GitLab CI). Checks security, SHA pinning, supply chain, permissions, caching, and compliance.",
+  "category": "devops",
+  "tags": ["cicd", "github-actions", "gitlab", "security", "pipeline"],
+  "skills": [
+    {
+      "name": "cicd-review",
+      "displayName": "CI/CD Pipeline Review",
+      "trigger": "When the user asks to review, audit, or check a CI/CD pipeline, workflow file, or .github/workflows/ / .gitlab-ci.yml content.",
+      "entrypoint": "./skills/cicd-review/skill.md"
+    },
+    {
+      "name": "pipeline-generator",
+      "displayName": "Pipeline Generator",
+      "trigger": "When the user asks to create, generate, or scaffold a new CI/CD pipeline or workflow.",
+      "entrypoint": "./skills/pipeline-generator/skill.md"
+    }
+  ],
+  "agents": [
+    {
+      "name": "cicd-agent",
+      "displayName": "CI/CD Automation Agent",
+      "description": "Full-lifecycle CI/CD agent that can review existing pipelines, generate new ones, and fix issues.",
+      "entrypoint": "./agents/cicd-agent.md"
+    }
+  ],
+  "hooks": [
+    {
+      "name": "workflow-lint",
+      "event": "pre-commit",
+      "description": "Lint workflow files before commit to catch common mistakes.",
+      "entrypoint": "./hooks/workflow-lint.sh"
+    }
+  ]
+}
