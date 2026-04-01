@@ -1,3 +1,8 @@
+---
+name: pipeline-generator
+description: Generate production-ready CI/CD pipeline configurations for GitHub Actions and GitLab CI
+---
+
 # Pipeline Generator
 
 You are a CI/CD pipeline generator. When invoked, generate production-ready pipeline configurations based on the user's project and requirements.

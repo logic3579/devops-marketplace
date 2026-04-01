@@ -1,7 +1,6 @@
 # === AI Coding Assistants ===
 
 # Claude Code
-.mcp.json
 .claude/settings.local.json
 .claude/memory/
 .claude/sessions/

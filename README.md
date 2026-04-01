@@ -60,6 +60,24 @@ Review and generate CI/CD pipelines (GitHub Actions, GitLab CI) with security-fi
 | Hook | `workflow-lint` | Pre-commit hook validating YAML syntax, SHA pinning, and required fields |
 | Script | `check-sha-pinning` | Standalone scanner for unpinned third-party actions |
 
+### share-mcp
+
+Shared MCP server configurations for team collaboration. Provides a `.mcp.json` with pre-configured servers using `npx`/`uvx` launchers and environment variable placeholders for sensitive data.
+
+| Server | Launcher | Description |
+|--------|----------|-------------|
+| `github` | npx | GitHub API via `@modelcontextprotocol/server-github` |
+| `sentry` | npx | Sentry error tracking via `@sentry/mcp-server` |
+| `gcloud` | npx | Google Cloud Platform via `@google-cloud/gcloud-mcp` |
+| `kubernetes` | npx | Kubernetes cluster management via `kubernetes-mcp-server` (read-only) |
+| `clickhouse` | npx | ClickHouse database via `@anthropic/mcp-server-clickhouse` |
+| `mysql` | uvx | MySQL database via `mcp-server-mysql` |
+| `postgres` | npx | PostgreSQL via `@modelcontextprotocol/server-postgres` |
+| `slack` | npx | Slack messaging via `@modelcontextprotocol/server-slack` |
+| `linear` | npx | Linear project management via `mcp-linear` |
+| `grafana` | npx | Grafana dashboards via `@grafana/mcp-server` |
+| `filesystem` | npx | Local filesystem access via `@modelcontextprotocol/server-filesystem` |
+
 ## Getting Started
 
 ### Prerequisites
@@ -302,7 +320,8 @@ mkdir -p plugins/<plugin-name>/skills/<skill-name>/{references,scripts}
 ```
 
 2. Write the skill prompt in `skill.md` — this is the core instruction set that Claude follows. Structure it with:
-   - A clear role definition (first line)
+   - YAML frontmatter with `name` and `description` fields
+   - A clear role definition (first line after frontmatter)
    - Input requirements (what the skill needs to operate)
    - Step-by-step checklist or procedure
    - Output format specification

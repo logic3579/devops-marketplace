@@ -18,12 +18,13 @@ plugins/<name>/hooks/<hook>.sh            — Hook scripts
 
 - **cicd-automation** — CI/CD pipeline review & generation (GitHub Actions, GitLab CI)
 - **marketplace-tools** — Meta-tooling for the marketplace itself (skill-creator)
+- **share-mcp** — Shared MCP server configurations for team collaboration (GitHub, Sentry, GCloud, Kubernetes, ClickHouse, MySQL, Postgres, Slack, Linear, Grafana, Filesystem)
 
 ## Key Rules
 
 - All shell scripts must use `#!/usr/bin/env bash` and `set -euo pipefail`
 - All shell scripts must be executable (`chmod +x`)
-- Skill prompts (`skill.md`) must have: role definition, check items with pass/fail criteria, output format template
+- Skill prompts (`skill.md`) must have: YAML frontmatter with `name` and `description` fields, role definition, check items with pass/fail criteria, output format template
 - `version` in `plugin.json` must match the corresponding entry in `marketplace.json`
 - All entrypoint paths in `plugin.json` must resolve to existing files
 - Reference documents go in `references/`, not inline in skill prompts

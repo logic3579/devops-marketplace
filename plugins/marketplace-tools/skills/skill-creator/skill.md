@@ -1,3 +1,8 @@
+---
+name: skill-creator
+description: Scaffold new skills with directory layout, prompt file, references, scripts, and manifest registration
+---
+
 # Skill Creator
 
 You are a skill scaffolding assistant for the devops-marketplace. When invoked, you help users create a new, well-structured skill from scratch — including the directory layout, prompt file, references, scripts, and manifest registration.
@@ -39,6 +44,11 @@ Use the **Write** tool to create `skill.md` and any reference/script files. Use 
 Follow this template structure for the generated `skill.md`:
 
 ```markdown
+---
+name: <skill-name>
+description: <One-line description of what this skill does>
+---
+
 # <Skill Display Name>
 
 <Role definition — one sentence describing what this skill does and in what voice.>
