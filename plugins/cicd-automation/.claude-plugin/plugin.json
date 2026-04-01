@@ -2,7 +2,7 @@
   "name": "cicd-automation",
   "version": "1.0.0",
   "description": "Review and generate CI/CD pipelines (GitHub Actions, GitLab CI). Checks security, SHA pinning, supply chain, permissions, caching, and compliance.",
-  "author": { "name": "logic" },
+  "author": { "name": "logic3579" },
   "skills": "./skills/",
   "agents": ["./agents/cicd-agent.md"]
 }

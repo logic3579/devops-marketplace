@@ -90,7 +90,7 @@ Shared MCP server configurations for team collaboration. Provides a `.mcp.json` 
 Clone the marketplace into your projects directory:
 
 ```bash
-git clone https://github.com/logic/devops-marketplace.git
+git clone https://github.com/logic3579/devops-marketplace.git
 cd devops-marketplace
 ```
 
@@ -147,7 +147,7 @@ To share with team members:
 
 ```bash
 # Team member clones the marketplace repo
-git clone https://github.com/logic/devops-marketplace.git
+git clone https://github.com/logic3579/devops-marketplace.git
 
 # Register their local copy
 /plugin marketplace add /absolute/path/to/devops-marketplace
@@ -177,7 +177,7 @@ cp -r /path/to/devops-marketplace/plugins/cicd-automation .claude/plugins/cicd-a
 **Option C: Git submodule**
 
 ```bash
-git submodule add https://github.com/logic/devops-marketplace.git .claude/marketplace
+git submodule add https://github.com/logic3579/devops-marketplace.git .claude/marketplace
 ```
 
 ### Using the Pre-commit Hook

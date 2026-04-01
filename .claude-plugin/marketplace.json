@@ -2,14 +2,14 @@
   "name": "devops-marketplace",
   "displayName": "Logic DevOps Marketplace",
   "owner": {
-    "name": "Logic",
+    "name": "logic3579",
     "email": "logic3@duck.com"
   },
   "metadata": {
     "description": "A curated collection of DevOps-oriented Claude Code plugins for CI/CD automation, infrastructure management, and deployment workflows. Designed for personal and team use.",
     "version": "1.0.0",
     "license": "MIT",
-    "repository": "https://github.com/logic/devops-marketplace"
+    "repository": "https://github.com/logic3579/devops-marketplace"
   },
   "plugins": [
     {
