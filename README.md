@@ -232,25 +232,11 @@ python3 -c "import json; json.load(open('.claude-plugin/marketplace.json'))"
 find plugins -name 'plugin.json' -exec sh -c \
   'echo "Checking: $1" && python3 -c "import json; json.load(open(\"$1\"))"' _ {} \;
 
-# Verify all entrypoints exist
-python3 -c "
-import json, os
-for p in json.load(open('.claude-plugin/marketplace.json'))['plugins']:
-    src = p['source']
-    manifest = json.load(open(f\"{src}/.claude-plugin/plugin.json\"))
-    for s in manifest.get('skills', []):
-        ep = os.path.join(src, s['entrypoint'])
-        status = 'OK' if os.path.exists(ep) else 'MISSING'
-        print(f'  [{status}] {s[\"name\"]}: {ep}')
-    for a in manifest.get('agents', []):
-        ep = os.path.join(src, a['entrypoint'])
-        status = 'OK' if os.path.exists(ep) else 'MISSING'
-        print(f'  [{status}] {a[\"name\"]}: {ep}')
-    for h in manifest.get('hooks', []):
-        ep = os.path.join(src, h['entrypoint'])
-        status = 'OK' if os.path.exists(ep) else 'MISSING'
-        print(f'  [{status}] {h[\"name\"]}: {ep}')
-"
+# Validate all plugins
+for dir in plugins/*/; do
+  echo "=== $(basename "$dir") ==="
+  claude plugin validate "$dir"
+done
 ```
 
 ### Testing Skills End-to-End
@@ -274,13 +260,13 @@ claude "Generate a GitHub Actions CI pipeline for this Node.js project"
 When reviewing plugin contributions from team members:
 
 - [ ] `claude plugin validate ./plugins/<name>` passes
-- [ ] `plugin.json` is valid JSON with all required fields
-- [ ] All `entrypoint` paths resolve to existing files
-- [ ] Skill prompts have clear trigger descriptions
+- [ ] `plugin.json` is valid JSON with correct schema (`skills`/`agents` as path strings, no `displayName`)
+- [ ] Skill/agent `.md` files have YAML frontmatter with `name` and `description`
 - [ ] Reference documents are accurate and up-to-date
 - [ ] Scripts are executable (`chmod +x`) and have usage comments
 - [ ] Scripts use `set -euo pipefail` for safety
 - [ ] No hardcoded paths or credentials
+- [ ] `plugin.json` includes `author` field
 - [ ] Version in `plugin.json` matches `marketplace.json`
 
 ## Development
@@ -298,16 +284,15 @@ mkdir -p plugins/<plugin-name>/{.claude-plugin,skills,agents,hooks}
 ```json
 {
   "name": "<plugin-name>",
-  "displayName": "<Plugin Display Name>",
   "version": "1.0.0",
   "description": "<What the plugin does>",
-  "category": "devops",
-  "tags": ["<tag1>", "<tag2>"],
-  "skills": [],
-  "agents": [],
-  "hooks": []
+  "author": { "name": "logic" },
+  "skills": "./skills/",
+  "agents": "./agents/"
 }
 ```
+
+> **Note:** `displayName`, `category`, and `tags` are NOT valid in `plugin.json`. Use `marketplace.json` for category/tags. `skills`/`agents` must be path strings or arrays of path strings, not object arrays.
 
 3. Register the plugin in `.claude-plugin/marketplace.json` under the `plugins` array.
 
@@ -329,7 +314,7 @@ mkdir -p plugins/<plugin-name>/skills/<skill-name>/{references,scripts}
 
 3. Add reference documents and scripts as needed.
 
-4. Register the skill in the plugin's `plugin.json`.
+4. Ensure the plugin's `plugin.json` has `"skills": "./skills/"` pointing to the skills directory.
 
 ### Writing Effective Skill Prompts
 

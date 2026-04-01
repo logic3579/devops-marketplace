@@ -1,18 +1,7 @@
 {
   "name": "marketplace-tools",
-  "displayName": "Marketplace Tools",
   "version": "1.0.0",
   "description": "Official built-in tools for the marketplace itself. Scaffold new skills, plugins, and validate marketplace structure.",
-  "category": "tooling",
-  "tags": ["marketplace", "scaffold", "skill", "plugin", "meta"],
-  "skills": [
-    {
-      "name": "skill-creator",
-      "displayName": "Skill Creator",
-      "trigger": "When the user asks to create, scaffold, or add a new skill to the marketplace or a plugin.",
-      "entrypoint": "./skills/skill-creator/skill.md"
-    }
-  ],
-  "agents": [],
-  "hooks": []
+  "author": { "name": "logic" },
+  "skills": "./skills/"
 }

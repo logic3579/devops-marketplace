@@ -25,8 +25,10 @@ plugins/<name>/hooks/<hook>.sh            — Hook scripts
 - All shell scripts must use `#!/usr/bin/env bash` and `set -euo pipefail`
 - All shell scripts must be executable (`chmod +x`)
 - Skill prompts (`skill.md`) must have: YAML frontmatter with `name` and `description` fields, role definition, check items with pass/fail criteria, output format template
+- Agent definitions (`.md`) must have YAML frontmatter with `name` and `description` fields
+- `plugin.json` schema: `skills`/`agents` must be path strings or arrays of path strings (not object arrays); `displayName`/`category`/`tags` are NOT valid fields (use `marketplace.json` for category/tags)
+- `plugin.json` must include `author` field
 - `version` in `plugin.json` must match the corresponding entry in `marketplace.json`
-- All entrypoint paths in `plugin.json` must resolve to existing files
 - Reference documents go in `references/`, not inline in skill prompts
 - CI workflow at `.github/workflows/validate-plugins.yml` validates structure on every push/PR
 
@@ -39,9 +41,9 @@ plugins/<name>/hooks/<hook>.sh            — Hook scripts
 
 ## When Adding a New Skill
 
-1. Create `plugins/<plugin>/skills/<skill-name>/skill.md`
+1. Create `plugins/<plugin>/skills/<skill-name>/skill.md` (with YAML frontmatter)
 2. Add `references/` and `scripts/` subdirs if needed
-3. Register in the plugin's `plugin.json` under `skills[]`
+3. Ensure the plugin's `plugin.json` has `"skills": "./skills/"` pointing to the skills directory
 4. If creating a new plugin, also register in `.claude-plugin/marketplace.json`
 
 ## When Editing Skill Prompts
