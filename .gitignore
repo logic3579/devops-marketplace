@@ -5,12 +5,6 @@
 .claude/memory/
 .claude/sessions/
 
-# Codex
-.codex/config.toml
-
-# Gemini CLI
-.gemini/settings.json
-
 # Cursor
 .cursorignore
 .cursorindexingignore
