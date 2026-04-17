@@ -1,0 +1,31 @@
+{
+  "mcpServers": {
+    "gcloud": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@google-cloud/gcloud-mcp"],
+      "env": {}
+    },
+    "kubernetes": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "kubernetes-mcp-server@latest", "--read-only"],
+      "env": {}
+    },
+    "clickhouse": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["--python", "3.10", "mcp-clickhouse"],
+      "env": {
+        "CLICKHOUSE_HOST": "$CLICKHOUSE_HOST",
+        "CLICKHOUSE_USER": "$CLICKHOUSE_USER",
+        "CLICKHOUSE_PASSWORD": "$CLICKHOUSE_PASSWORD",
+        "CLICKHOUSE_PORT": "80",
+        "CLICKHOUSE_SECURE": "false",
+        "CLICKHOUSE_VERIFY": "false",
+        "CLICKHOUSE_CONNECT_TIMEOUT": "30",
+        "CLICKHOUSE_SEND_RECEIVE_TIMEOUT": "30"
+      }
+    }
+  }
+}

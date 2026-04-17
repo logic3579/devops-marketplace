@@ -1,0 +1,29 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    "superpowers@git+https://github.com/obra/superpowers.git",
+    "oh-my-openagent@git+https://github.com/code-yeongyu/oh-my-openagent.git"
+  ],
+  "mcp": {
+    "kubernetes": {
+      "type": "local",
+      "command": ["npx", "-y", "kubernetes-mcp-server@latest", "--read-only"],
+      "enabled": true
+    },
+    "clickhouse": {
+      "type": "local",
+      "command": ["uvx", "--python", "3.10", "mcp-clickhouse"],
+      "enabled": true,
+      "environment": {
+        "CLICKHOUSE_HOST": "$CLICKHOUSE_HOST",
+        "CLICKHOUSE_USER": "$CLICKHOUSE_USER",
+        "CLICKHOUSE_PASSWORD": "$CLICKHOUSE_PASSWORD",
+        "CLICKHOUSE_PORT": "80",
+        "CLICKHOUSE_SECURE": "false",
+        "CLICKHOUSE_VERIFY": "false",
+        "CLICKHOUSE_CONNECT_TIMEOUT": "30",
+        "CLICKHOUSE_SEND_RECEIVE_TIMEOUT": "30"
+      }
+    }
+  }
+}

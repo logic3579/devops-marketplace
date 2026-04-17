@@ -1,0 +1,25 @@
+[mcp_servers.gcloud]
+command = "npx"
+args = ["-y", "@google-cloud/gcloud-mcp"]
+
+[mcp_servers.kubernetes]
+command = "npx"
+args = ["-y", "kubernetes-mcp-server@latest", "--read-only"]
+startup_timeout_sec = 10
+
+[mcp_servers.clickhouse]
+command = "uvx"
+args = [
+  "--python",
+  "3.10",
+  "mcp-clickhouse"
+]
+[mcp_servers.clickhouse.env]
+CLICKHOUSE_HOST = "$CLICKHOUSE_HOST"
+CLICKHOUSE_USER = "$CLICKHOUSE_USER"
+CLICKHOUSE_PASSWORD = "$CLICKHOUSE_PASSWORD"
+CLICKHOUSE_PORT = "80"
+CLICKHOUSE_SECURE = "false"
+CLICKHOUSE_VERIFY = "false"
+CLICKHOUSE_CONNECT_TIMEOUT = "30"
+CLICKHOUSE_SEND_RECEIVE_TIMEOUT = "30"
