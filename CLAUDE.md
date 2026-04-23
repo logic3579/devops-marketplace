@@ -17,7 +17,7 @@ plugins/<name>/hooks/<hook>.sh            — Hook scripts
 ## Current Plugins
 
 - **cicd-automation** — CI/CD pipeline review & generation (GitHub Actions, GitLab CI)
-- **marketplace-tools** — Meta-tooling for the marketplace itself (skill-creator)
+- **marketplace-tools** — Meta-tooling for the marketplace itself (skill-creator, changelog-generator)
 - **share-mcp** — Shared MCP server configurations for team collaboration (GitHub, Sentry, GCloud, Kubernetes, ClickHouse, MySQL, Postgres, Slack, Linear, Grafana, Filesystem)
 
 ## Key Rules
