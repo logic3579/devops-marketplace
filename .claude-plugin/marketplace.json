@@ -19,14 +19,6 @@
       "source": "./plugins/cicd-automation",
       "category": "devops",
       "tags": ["cicd", "github-actions", "gitlab", "security", "pipeline"]
-    },
-    {
-      "name": "marketplace-tools",
-      "description": "Official built-in tools for the marketplace itself. Scaffold new skills, plugins, and validate marketplace structure.",
-      "version": "1.0.0",
-      "source": "./plugins/marketplace-tools",
-      "category": "tooling",
-      "tags": ["marketplace", "scaffold", "skill", "plugin", "meta"]
     }
   ]
 }

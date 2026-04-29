@@ -21,6 +21,10 @@ devops-marketplace/
 │       │   └── <agent-name>.md   # Agent definition
 │       └── hooks/
 │           └── <hook-name>.sh    # Hook scripts
+├── skills/                       # Repo-level skills (not packaged in any plugin)
+│   └── <skill-name>/
+│       ├── skill.md
+│       └── references/
 └── README.md
 ```
 
@@ -59,6 +63,15 @@ Review and generate CI/CD pipelines (GitHub Actions, GitLab CI) with security-fi
 | Agent | `cicd-agent` | Full-lifecycle agent: review, generate, diagnose failures, and apply fixes |
 | Hook | `workflow-lint` | Pre-commit hook validating YAML syntax, SHA pinning, and required fields |
 | Script | `check-sha-pinning` | Standalone scanner for unpinned third-party actions |
+
+## Repo-Level Skills
+
+Standalone skills under `skills/` that are not bundled into any plugin. Use them directly in dev mode or symlink/copy into your tool of choice.
+
+| Skill | Description |
+|-------|-------------|
+| `skill-creator` | Scaffold new skills with proper directory layout, prompt file, references, scripts, and manifest registration |
+| `changelog-generator` | Generate user-facing changelogs from git commits by analyzing history, categorizing changes, and rewriting commits as release notes |
 
 ## Shared MCP Servers
 
@@ -154,7 +167,6 @@ git clone https://github.com/logic3579/devops-marketplace.git
 
 # Install any plugin
 /plugin install cicd-automation@devops-marketplace
-/plugin install marketplace-tools@devops-marketplace
 ```
 
 #### Mode 3: Project-Embedded (per-project integration)

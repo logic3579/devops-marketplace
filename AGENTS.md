@@ -15,6 +15,7 @@ plugins/<name>/skills/<skill>/references/ — Domain knowledge (keep prompts <15
 plugins/<name>/skills/<skill>/scripts/    — Helper shell scripts
 plugins/<name>/agents/<agent>.md          — Agent definitions
 plugins/<name>/hooks/<hook>.sh            — Hook scripts
+skills/<skill>/skill.md                   — Repo-level skills (not packaged in any plugin)
 .codex/INSTALL.md  .gemini/INSTALL.md  .opencode/INSTALL.md — Cross-tool install docs
 ```
 
@@ -23,7 +24,13 @@ plugins/<name>/hooks/<hook>.sh            — Hook scripts
 | Plugin | Description |
 |---|---|
 | `cicd-automation` | CI/CD pipeline review & generation (GitHub Actions, GitLab CI) |
-| `marketplace-tools` | Meta-tooling for the marketplace itself (skill-creator) |
+
+## Repo-Level Skills
+
+| Skill | Description |
+|---|---|
+| `skill-creator` | Scaffold new skills with proper structure and manifest entries |
+| `changelog-generator` | Generate user-facing changelogs from git history |
 
 A project-scoped `.mcp.json` at the repo root provides shared MCP server configs (GitHub, Sentry, K8s, Postgres, etc.) using `${ENV_VAR}` placeholders.
 

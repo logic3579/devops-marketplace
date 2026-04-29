@@ -36,12 +36,12 @@ Review and generate CI/CD pipelines (GitHub Actions, GitLab CI). Checks security
 - `cicd-review` - Review existing CI/CD pipeline files for security and best practices
 - `cicd-generate` - Generate new GitHub Actions or GitLab CI pipelines
 
-### marketplace-tools
+### Repo-Level Skills
 
-Official meta-tooling for the marketplace itself. Scaffold new skills, plugins, and validate marketplace structure.
+Standalone skills under `skills/` that are not packaged into any plugin:
 
-**Skills:**
 - `skill-creator` - Generate new skills with proper YAML frontmatter and structure
+- `changelog-generator` - Generate user-facing changelogs from git commit history
 
 ### Shared MCP Servers
 

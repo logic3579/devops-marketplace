@@ -34,7 +34,13 @@ gemini activate_skill skill-creator
 ### Available Plugins
 
 - **cicd-automation**: Automated pipeline generation and review.
-- **marketplace-tools**: Tools for managing and extending the marketplace.
+
+### Repo-Level Skills
+
+Standalone skills under `skills/` that are not part of any plugin:
+
+- **skill-creator**: Scaffold new skills with proper structure and manifest entries.
+- **changelog-generator**: Generate user-facing changelogs from git commit history.
 
 A project-scoped `.mcp.json` at the repo root provides shared Model Context Protocol (MCP) server configurations.
 

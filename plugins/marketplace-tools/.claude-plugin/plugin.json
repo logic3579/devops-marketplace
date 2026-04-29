@@ -1,7 +1,0 @@
-{
-  "name": "marketplace-tools",
-  "version": "1.0.0",
-  "description": "Official built-in tools for the marketplace itself. Scaffold new skills, plugins, and validate marketplace structure.",
-  "author": { "name": "logic3579" },
-  "skills": "./skills/"
-}
