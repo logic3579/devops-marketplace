@@ -24,7 +24,8 @@ plugins/<name>/hooks/<hook>.sh            — Hook scripts
 |---|---|
 | `cicd-automation` | CI/CD pipeline review & generation (GitHub Actions, GitLab CI) |
 | `marketplace-tools` | Meta-tooling for the marketplace itself (skill-creator) |
-| `share-mcp` | Shared MCP server configs (GitHub, Sentry, K8s, Postgres, etc.) — **orphaned** (not in marketplace.json) |
+
+A project-scoped `.mcp.json` at the repo root provides shared MCP server configs (GitHub, Sentry, K8s, Postgres, etc.) using `${ENV_VAR}` placeholders.
 
 ## Commands
 
@@ -116,5 +117,5 @@ Use conventional prefixes: `feat:`, `fix:`, `chore:`. Keep subjects short and im
 ## Security
 
 - Never commit secrets to manifests, scripts, or configs
-- Use `${ENV_VAR}` placeholders in MCP configs (see `share-mcp/.mcp.json`)
+- Use `${ENV_VAR}` placeholders in MCP configs (see `.mcp.json` at repo root)
 - CI uses SHA-pinned GitHub Actions (enforced by `check-sha-pinning.sh`)

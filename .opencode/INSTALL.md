@@ -43,9 +43,9 @@ Official meta-tooling for the marketplace itself. Scaffold new skills, plugins, 
 **Skills:**
 - `skill-creator` - Generate new skills with proper YAML frontmatter and structure
 
-### share-mcp
+### Shared MCP Servers
 
-Shared MCP server configurations for team collaboration (GitHub, Sentry, GCloud, Kubernetes, ClickHouse, MySQL, Postgres, Slack, Linear, Grafana, Filesystem).
+A project-scoped `.mcp.json` at the repo root provides shared MCP server configurations for team collaboration (GitHub, Sentry, GCloud, Kubernetes, ClickHouse, MySQL, Postgres, Slack, Linear, Grafana, Filesystem).
 
 ## Usage
 

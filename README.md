@@ -60,9 +60,9 @@ Review and generate CI/CD pipelines (GitHub Actions, GitLab CI) with security-fi
 | Hook | `workflow-lint` | Pre-commit hook validating YAML syntax, SHA pinning, and required fields |
 | Script | `check-sha-pinning` | Standalone scanner for unpinned third-party actions |
 
-### share-mcp
+## Shared MCP Servers
 
-Shared MCP server configurations for team collaboration. Provides a `.mcp.json` with pre-configured servers using `npx`/`uvx` launchers and environment variable placeholders for sensitive data.
+A project-scoped `.mcp.json` at the repo root provides pre-configured MCP servers using `npx`/`uvx` launchers and `${ENV_VAR}` placeholders for sensitive data. Claude Code loads it automatically when launched from this directory.
 
 | Server | Launcher | Description |
 |--------|----------|-------------|
@@ -70,7 +70,7 @@ Shared MCP server configurations for team collaboration. Provides a `.mcp.json` 
 | `sentry` | npx | Sentry error tracking via `@sentry/mcp-server` |
 | `gcloud` | npx | Google Cloud Platform via `@google-cloud/gcloud-mcp` |
 | `kubernetes` | npx | Kubernetes cluster management via `kubernetes-mcp-server` (read-only) |
-| `clickhouse` | npx | ClickHouse database via `@anthropic/mcp-server-clickhouse` |
+| `clickhouse` | uvx | ClickHouse database via `mcp-clickhouse` |
 | `mysql` | uvx | MySQL database via `mcp-server-mysql` |
 | `postgres` | npx | PostgreSQL via `@modelcontextprotocol/server-postgres` |
 | `slack` | npx | Slack messaging via `@modelcontextprotocol/server-slack` |

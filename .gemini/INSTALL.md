@@ -35,7 +35,8 @@ gemini activate_skill skill-creator
 
 - **cicd-automation**: Automated pipeline generation and review.
 - **marketplace-tools**: Tools for managing and extending the marketplace.
-- **share-mcp**: Integration for Model Context Protocol.
+
+A project-scoped `.mcp.json` at the repo root provides shared Model Context Protocol (MCP) server configurations.
 
 ## Troubleshooting
 

@@ -11,12 +11,12 @@ This repository is a curated collection of DevOps-oriented plugins for AI assist
 ### Directory Structure
 
 - `.claude-plugin/`: Contains the global `marketplace.json` registry.
+- `.mcp.json`: Project-scoped Model Context Protocol (MCP) server configurations (uses `${ENV_VAR}` placeholders).
 - `.gemini/`: Gemini-specific installation and usage documentation (`INSTALL.md`).
 - `.opencode/`: OpenCode-specific installation documentation.
 - `plugins/`: The core of the repository, containing all available plugins.
     - `cicd-automation/`: CI/CD pipeline review and generation.
     - `marketplace-tools/`: Tools for managing and extending this marketplace (e.g., `skill-creator`).
-    - `share-mcp/`: Shared Model Context Protocol (MCP) server configurations.
 - `.github/workflows/`: Automated validation of plugin structure and JSON integrity.
 
 ## Development & Usage

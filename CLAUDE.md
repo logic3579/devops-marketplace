@@ -18,7 +18,8 @@ plugins/<name>/hooks/<hook>.sh            — Hook scripts
 
 - **cicd-automation** — CI/CD pipeline review & generation (GitHub Actions, GitLab CI)
 - **marketplace-tools** — Meta-tooling for the marketplace itself (skill-creator, changelog-generator)
-- **share-mcp** — Shared MCP server configurations for team collaboration (GitHub, Sentry, GCloud, Kubernetes, ClickHouse, MySQL, Postgres, Slack, Linear, Grafana, Filesystem)
+
+A project-scoped `.mcp.json` at the repo root provides shared MCP server configurations (GitHub, Sentry, GCloud, Kubernetes, ClickHouse, MySQL, Postgres, Slack, Linear, Grafana, Filesystem) using `${ENV_VAR}` placeholders.
 
 ## Key Rules
 
