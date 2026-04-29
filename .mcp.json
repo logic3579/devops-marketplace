@@ -2,42 +2,30 @@
   "mcpServers": {
     "clickhouse": {
       "type": "stdio",
-      "command": "uv",
-      "args": [
-        "run",
-        "--with",
-        "mcp-clickhouse",
-        "--python",
-        "3.10",
-        "mcp-clickhouse"
-      ],
+      "command": "uvx",
+      "args": ["--python", "3.10", "mcp-clickhouse"],
       "env": {
-        "CLICKHOUSE_HOST": "${CLICKHOUSE_HOST:-localhost}",
-        "CLICKHOUSE_PORT": "${CLICKHOUSE_PORT:-9000}",
-        "CLICKHOUSE_USER": "${CLICKHOUSE_USER:-default}",
-        "CLICKHOUSE_PASSWORD": "${CLICKHOUSE_PASSWORD:-defaultPwd}",
-        "CLICKHOUSE_SECURE": "${CLICKHOUSE_SECURE:-true}",
-        "CLICKHOUSE_VERIFY": "${CLICKHOUSE_VERIFY:-true}",
+        "CLICKHOUSE_HOST": "$CLICKHOUSE_HOST",
+        "CLICKHOUSE_USER": "$CLICKHOUSE_USER",
+        "CLICKHOUSE_PASSWORD": "$CLICKHOUSE_PASSWORD",
+        "CLICKHOUSE_PORT": "8123",
+        "CLICKHOUSE_SECURE": "false",
+        "CLICKHOUSE_VERIFY": "false",
         "CLICKHOUSE_CONNECT_TIMEOUT": "30",
         "CLICKHOUSE_SEND_RECEIVE_TIMEOUT": "30"
-      }
-    },
-    "mysql": {
-      "type": "stdio",
-      "command": "uvx",
-      "args": ["--from", "mysql-mcp-server", "mysql_mcp_server"],
-      "env": {
-        "MYSQL_HOST": "${MYSQL_HOST:-localhost}",
-        "MYSQL_PORT": "${MYSQL_PORT:-3306}",
-        "MYSQL_USER": "${MYSQL_USER:-root}",
-        "MYSQL_PASSWORD": "${MYSQL_PASSWORD:-rootPwd}",
-        "MYSQL_DATABASE": "${MYSQL_DATABASE:-mysql}"
       }
     },
     "gcloud": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@google-cloud/gcloud-mcp"]
+      "args": ["-y", "@google-cloud/gcloud-mcp"],
+      "env": {}
+    },
+    "kubernetes": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "kubernetes-mcp-server@latest", "--read-only"],
+      "env": {}
     }
   }
 }
