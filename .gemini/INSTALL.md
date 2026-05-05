@@ -27,8 +27,8 @@ The DevOps Marketplace provides a suite of tools and skills optimized for DevOps
 You can activate specialized skills from this marketplace using the `activate_skill` tool:
 
 ```bash
-# Example: Activate the skill-creator to build new skills
-gemini activate_skill skill-creator
+# Example: Activate the changelog-generator
+gemini activate_skill changelog-generator
 ```
 
 ### Available Plugins
@@ -39,7 +39,6 @@ gemini activate_skill skill-creator
 
 Standalone skills under `skills/` that are not part of any plugin:
 
-- **skill-creator**: Scaffold new skills with proper structure and manifest entries.
 - **changelog-generator**: Generate user-facing changelogs from git commit history.
 
 A project-scoped `.mcp.json` at the repo root provides shared Model Context Protocol (MCP) server configurations.

@@ -35,11 +35,6 @@ ln -s ~/.codex/devops-marketplace/plugins/cicd-automation/skills/cicd-review/scr
 mkdir -p ~/.agents/skills/pipeline-generator
 ln -s ~/.codex/devops-marketplace/plugins/cicd-automation/skills/pipeline-generator/skill.md ~/.agents/skills/pipeline-generator/SKILL.md
 
-# skill-creator (repo-level skill)
-mkdir -p ~/.agents/skills/skill-creator
-ln -s ~/.codex/devops-marketplace/skills/skill-creator/skill.md ~/.agents/skills/skill-creator/SKILL.md
-ln -s ~/.codex/devops-marketplace/skills/skill-creator/references ~/.agents/skills/skill-creator/references
-
 # changelog-generator (repo-level skill)
 mkdir -p ~/.agents/skills/changelog-generator
 ln -s ~/.codex/devops-marketplace/skills/changelog-generator/skill.md ~/.agents/skills/changelog-generator/SKILL.md
@@ -53,7 +48,6 @@ After installation, Codex should be able to discover these skills:
 
 - `cicd-review`: Review GitHub Actions or GitLab CI pipelines for security, reliability, performance, and compliance issues.
 - `pipeline-generator`: Generate CI/CD pipelines with safer defaults.
-- `skill-creator`: Scaffold new marketplace skills and supporting files.
 - `changelog-generator`: Generate user-facing changelogs from git commit history.
 
 ## Notes
@@ -67,7 +61,6 @@ After installation, Codex should be able to discover these skills:
 ```bash
 ls -la ~/.agents/skills/cicd-review
 ls -la ~/.agents/skills/pipeline-generator
-ls -la ~/.agents/skills/skill-creator
 ls -la ~/.agents/skills/changelog-generator
 ```
 
@@ -77,7 +70,7 @@ Then start a new Codex session and ask for a task that should match one of the i
 
 - "Review this GitHub Actions workflow for security issues."
 - "Generate a GitHub Actions pipeline for this project."
-- "Create a new marketplace skill for Terraform review."
+- "Generate a changelog from recent commits."
 
 ## Updating
 
@@ -92,7 +85,6 @@ The skill links continue to point at the updated files.
 ```bash
 rm -rf ~/.agents/skills/cicd-review
 rm -rf ~/.agents/skills/pipeline-generator
-rm -rf ~/.agents/skills/skill-creator
 rm -rf ~/.agents/skills/changelog-generator
 ```
 

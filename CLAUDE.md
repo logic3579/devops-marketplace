@@ -40,7 +40,6 @@ Standalone skills under `skills/`, not packaged in any plugin:
 
 | Skill | Description |
 |---|---|
-| `skill-creator` | Scaffold new skills with directory layout, prompt file, references, scripts, and manifest registration |
 | `changelog-generator` | Generate user-facing changelogs from git history |
 
 ## Shared MCP Servers

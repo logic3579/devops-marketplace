@@ -40,7 +40,6 @@ Review and generate CI/CD pipelines (GitHub Actions, GitLab CI). Checks security
 
 Standalone skills under `skills/` that are not packaged into any plugin:
 
-- `skill-creator` - Generate new skills with proper YAML frontmatter and structure
 - `changelog-generator` - Generate user-facing changelogs from git commit history
 
 ### Shared MCP Servers

@@ -70,7 +70,6 @@ Standalone skills under `skills/` that are not bundled into any plugin. Use them
 
 | Skill | Description |
 |-------|-------------|
-| `skill-creator` | Scaffold new skills with proper directory layout, prompt file, references, scripts, and manifest registration |
 | `changelog-generator` | Generate user-facing changelogs from git commits by analyzing history, categorizing changes, and rewriting commits as release notes |
 
 ## Shared MCP Servers

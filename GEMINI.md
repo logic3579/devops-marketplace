@@ -16,7 +16,7 @@ This repository is a curated collection of DevOps-oriented plugins for AI assist
 - `.opencode/`: OpenCode-specific installation documentation.
 - `plugins/`: The core of the repository, containing all available plugins.
     - `cicd-automation/`: CI/CD pipeline review and generation.
-- `skills/`: Repo-level skills not packaged in any plugin (`skill-creator`, `changelog-generator`).
+- `skills/`: Repo-level skills not packaged in any plugin (`changelog-generator`).
 - `.github/workflows/`: Automated validation of plugin structure and JSON integrity.
 
 ## Development & Usage
