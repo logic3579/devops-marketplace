@@ -19,6 +19,19 @@ This repository is a curated collection of DevOps-oriented plugins for AI assist
 - `skills/`: Repo-level skills not packaged in any plugin (`changelog-generator`).
 - `.github/workflows/`: Automated validation of plugin structure and JSON integrity.
 
+## Shared MCP Servers
+
+`.mcp.json` at the repo root provides 4 stdio MCP servers (auto-loaded by Claude Code from this directory). The same set is mirrored into `.codex/config.toml`, `.gemini/settings.json`, and `.opencode/opencode.json` — there is no auto-sync, so update all four files together when adding or removing a server.
+
+| Server | Launcher | Purpose |
+|---|---|---|
+| `gcloud` | `npx @google-cloud/gcloud-mcp` | Google Cloud Platform |
+| `kubernetes` | `npx kubernetes-mcp-server --read-only` | Kubernetes (read-only) |
+| `grafana` | `mcp-grafana` (Go binary) | Grafana dashboards & datasources |
+| `nightingale` | `npx @n9e/n9e-mcp-server` | Nightingale (n9e) monitoring |
+
+Sensitive values use `${ENV_VAR}` placeholders. `grafana` and `nightingale` need one-time setup: install the binary (`go install github.com/grafana/mcp-grafana/cmd/mcp-grafana@latest`) and export `GRAFANA_URL`, `GRAFANA_SERVICE_ACCOUNT_TOKEN`, `N9E_BASE_URL`, `N9E_TOKEN`. See `README.md` → "Setup Prerequisites" for full instructions.
+
 ## Development & Usage
 
 ### Key Commands

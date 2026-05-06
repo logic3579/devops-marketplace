@@ -55,7 +55,7 @@ A project-scoped `.mcp.json` at the repo root provides 4 stdio MCP servers, load
 
 `grafana` and `nightingale` need one-time setup before they start: install the `mcp-grafana` Go binary (`go install github.com/grafana/mcp-grafana/cmd/mcp-grafana@latest`) and export `GRAFANA_URL` / `GRAFANA_SERVICE_ACCOUNT_TOKEN` / `N9E_BASE_URL` / `N9E_TOKEN` in the launching shell. Full instructions live in `README.md` → "Setup Prerequisites".
 
-The tool-native configs (`.codex/config.toml`, `.gemini/settings.json`, `.opencode/opencode.json`) keep their own MCP server lists and are **not** auto-synced with `.mcp.json` — update them deliberately when adding/removing servers.
+The same set is mirrored into the tool-native configs (`.codex/config.toml`, `.gemini/settings.json`, `.opencode/opencode.json`) — there is no auto-sync, so update all four files together when adding or removing a server.
 
 ## Cross-Tool Support
 

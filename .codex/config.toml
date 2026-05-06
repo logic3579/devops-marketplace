@@ -1,21 +1,22 @@
-[mcp_servers.clickhouse]
-command = "uvx"
-args = ["--python", "3.10", "mcp-clickhouse"]
-[mcp_servers.clickhouse.env]
-CLICKHOUSE_HOST = "$CLICKHOUSE_HOST"
-CLICKHOUSE_USER = "$CLICKHOUSE_USER"
-CLICKHOUSE_PASSWORD = "$CLICKHOUSE_PASSWORD"
-CLICKHOUSE_PORT = "8123"
-CLICKHOUSE_SECURE = "false"
-CLICKHOUSE_VERIFY = "false"
-CLICKHOUSE_CONNECT_TIMEOUT = "30"
-CLICKHOUSE_SEND_RECEIVE_TIMEOUT = "30"
-
 [mcp_servers.gcloud]
 command = "npx"
 args = ["-y", "@google-cloud/gcloud-mcp"]
+
+[mcp_servers.grafana]
+command = "mcp-grafana"
+args = []
+[mcp_servers.grafana.env]
+GRAFANA_URL = "$GRAFANA_URL"
+GRAFANA_SERVICE_ACCOUNT_TOKEN = "$GRAFANA_SERVICE_ACCOUNT_TOKEN"
 
 [mcp_servers.kubernetes]
 command = "npx"
 args = ["-y", "kubernetes-mcp-server@latest", "--read-only"]
 startup_timeout_sec = 10
+
+[mcp_servers.nightingale]
+command = "npx"
+args = ["-y", "@n9e/n9e-mcp-server", "stdio"]
+[mcp_servers.nightingale.env]
+N9E_BASE_URL = "$N9E_BASE_URL"
+N9E_TOKEN = "$N9E_TOKEN"

@@ -10,7 +10,7 @@ The same content is also exposed to Codex, Gemini CLI, and OpenCode via tool-nat
 
 ```
 .claude-plugin/marketplace.json           — Marketplace registry (lists all plugins)
-.mcp.json                                 — Project-scoped MCP servers (3 stdio servers)
+.mcp.json                                 — Project-scoped MCP servers (4 stdio servers)
 .github/workflows/validate-plugins.yml    — CI: 4 validation jobs
 .claude/                                  — Claude Code project settings
 .codex/   .gemini/   .opencode/           — Cross-tool install docs + tool-native configs
@@ -50,13 +50,16 @@ Standalone skills under `skills/`, not packaged into any plugin:
 
 ## Shared MCP Servers
 
-`.mcp.json` at the repo root provides 3 stdio MCP servers loaded automatically by Claude Code from this directory; sensitive values use `${ENV_VAR}` placeholders. The same set is mirrored into `.codex/config.toml`, `.gemini/settings.json`, and `.opencode/opencode.json`.
+`.mcp.json` at the repo root provides 4 stdio MCP servers loaded automatically by Claude Code from this directory; sensitive values use `${ENV_VAR}` placeholders. The same set is mirrored into `.codex/config.toml`, `.gemini/settings.json`, and `.opencode/opencode.json` — there is no auto-sync, so update all four files together when adding or removing a server.
 
 | Server | Launcher | Purpose |
 |---|---|---|
-| `clickhouse` | `uvx mcp-clickhouse` | ClickHouse database access |
 | `gcloud` | `npx @google-cloud/gcloud-mcp` | Google Cloud Platform |
 | `kubernetes` | `npx kubernetes-mcp-server --read-only` | Kubernetes (read-only) |
+| `grafana` | `mcp-grafana` (Go binary) | Grafana dashboards & datasources |
+| `nightingale` | `npx @n9e/n9e-mcp-server` | Nightingale (n9e) monitoring |
+
+`grafana` and `nightingale` need one-time setup before they start: install the `mcp-grafana` Go binary (`go install github.com/grafana/mcp-grafana/cmd/mcp-grafana@latest`) and export `GRAFANA_URL` / `GRAFANA_SERVICE_ACCOUNT_TOKEN` / `N9E_BASE_URL` / `N9E_TOKEN` in the launching shell. Full instructions live in `README.md` → "Setup Prerequisites".
 
 ## Cross-Tool Support
 
