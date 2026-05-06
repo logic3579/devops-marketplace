@@ -8,7 +8,7 @@ There is no compiled build step. Validation (CI + `claude plugin validate`) is t
 
 ```
 .claude-plugin/marketplace.json           — Marketplace registry (lists all plugins)
-.mcp.json                                 — Project-scoped MCP servers (3 stdio servers)
+.mcp.json                                 — Project-scoped MCP servers (4 stdio servers)
 .github/workflows/validate-plugins.yml    — CI: 4 validation jobs
 .claude/                                  — Claude Code project settings (settings.json, settings.local.json)
 .codex/   .gemini/   .opencode/           — Cross-tool install docs + tool-native configs
@@ -44,15 +44,18 @@ Standalone skills under `skills/`, not packaged in any plugin:
 
 ## Shared MCP Servers
 
-A project-scoped `.mcp.json` at the repo root provides 3 stdio MCP servers, loaded automatically when Claude Code launches from this directory. Sensitive values use `${ENV_VAR}` placeholders.
+A project-scoped `.mcp.json` at the repo root provides 4 stdio MCP servers, loaded automatically when Claude Code launches from this directory. Sensitive values use `${ENV_VAR}` placeholders.
 
 | Server | Launcher | Purpose |
 |---|---|---|
-| `clickhouse` | `uvx mcp-clickhouse` | ClickHouse database access |
 | `gcloud` | `npx @google-cloud/gcloud-mcp` | Google Cloud Platform |
 | `kubernetes` | `npx kubernetes-mcp-server --read-only` | Kubernetes (read-only) |
+| `grafana` | `mcp-grafana` (local Go binary) | Grafana dashboards & datasources |
+| `nightingale` | `npx @n9e/n9e-mcp-server` | Nightingale (n9e) monitoring |
 
-The same set is mirrored into the tool-native configs (`.codex/config.toml`, `.gemini/settings.json`, `.opencode/opencode.json`) so all four tools see the same servers.
+`grafana` and `nightingale` need one-time setup before they start: install the `mcp-grafana` Go binary (`go install github.com/grafana/mcp-grafana/cmd/mcp-grafana@latest`) and export `GRAFANA_URL` / `GRAFANA_SERVICE_ACCOUNT_TOKEN` / `N9E_BASE_URL` / `N9E_TOKEN` in the launching shell. Full instructions live in `README.md` → "Setup Prerequisites".
+
+The tool-native configs (`.codex/config.toml`, `.gemini/settings.json`, `.opencode/opencode.json`) keep their own MCP server lists and are **not** auto-synced with `.mcp.json` — update them deliberately when adding/removing servers.
 
 ## Cross-Tool Support
 

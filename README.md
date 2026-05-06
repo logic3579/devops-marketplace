@@ -74,21 +74,46 @@ Standalone skills under `skills/` that are not bundled into any plugin. Use them
 
 ## Shared MCP Servers
 
-A project-scoped `.mcp.json` at the repo root provides pre-configured MCP servers using `npx`/`uvx` launchers and `${ENV_VAR}` placeholders for sensitive data. Claude Code loads it automatically when launched from this directory.
+A project-scoped `.mcp.json` at the repo root provides 4 stdio MCP servers. Claude Code loads them automatically when launched from this directory. Sensitive values use `${ENV_VAR}` placeholders so secrets never land in git.
 
-| Server | Launcher | Description |
-|--------|----------|-------------|
-| `github` | npx | GitHub API via `@modelcontextprotocol/server-github` |
-| `sentry` | npx | Sentry error tracking via `@sentry/mcp-server` |
-| `gcloud` | npx | Google Cloud Platform via `@google-cloud/gcloud-mcp` |
-| `kubernetes` | npx | Kubernetes cluster management via `kubernetes-mcp-server` (read-only) |
-| `clickhouse` | uvx | ClickHouse database via `mcp-clickhouse` |
-| `mysql` | uvx | MySQL database via `mcp-server-mysql` |
-| `postgres` | npx | PostgreSQL via `@modelcontextprotocol/server-postgres` |
-| `slack` | npx | Slack messaging via `@modelcontextprotocol/server-slack` |
-| `linear` | npx | Linear project management via `mcp-linear` |
-| `grafana` | npx | Grafana dashboards via `@grafana/mcp-server` |
-| `filesystem` | npx | Local filesystem access via `@modelcontextprotocol/server-filesystem` |
+| Server | Launcher | Description | Setup |
+|--------|----------|-------------|-------|
+| `gcloud` | `npx @google-cloud/gcloud-mcp` | Google Cloud Platform | — |
+| `kubernetes` | `npx kubernetes-mcp-server --read-only` | Kubernetes cluster (read-only) | — |
+| `grafana` | `mcp-grafana` (Go binary) | Grafana dashboards & datasources | Binary + env vars |
+| `nightingale` | `npx @n9e/n9e-mcp-server` | Nightingale (n9e) monitoring | Env vars |
+
+### Setup Prerequisites
+
+`gcloud` and `kubernetes` work out of the box (assuming `npx` and your local `gcloud` / `kubectl` configs are present). The other two need a one-time setup.
+
+**1. Install the `mcp-grafana` binary** — required for the `grafana` server
+
+The `grafana` entry invokes a locally-installed Go binary instead of going through `npx`:
+
+```bash
+go install github.com/grafana/mcp-grafana/cmd/mcp-grafana@latest
+```
+
+Make sure `$(go env GOPATH)/bin` is on your `$PATH` so Claude Code can resolve `mcp-grafana`.
+
+**2. Export environment variables** — required for `grafana` and `nightingale`
+
+Both servers read credentials from the environment. Add the following to your shell profile (`~/.zshrc`, `~/.bashrc`, or a per-directory loader like [direnv](https://direnv.net/)):
+
+```bash
+# Grafana
+export GRAFANA_URL="https://grafana.example.com"
+export GRAFANA_SERVICE_ACCOUNT_TOKEN="<your-grafana-service-account-token>"
+
+# Nightingale (n9e)
+export N9E_BASE_URL="https://nightingale.example.com"
+export N9E_TOKEN="<your-nightingale-api-token>"
+```
+
+Replace the placeholders with your real values. `.mcp.json` references them by name only (`${GRAFANA_URL}` etc.), so credentials stay out of the repo.
+
+> Launch Claude Code from a shell where these variables are already exported — child processes inherit the environment, so unset variables = silent server startup failure.
 
 ## Getting Started
 
